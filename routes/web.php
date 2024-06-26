@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
+use App\Http\Middleware\IsAdmin;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -13,10 +14,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', IsAdmin::class]], function () {
     Route::get('/', function () {
         return view('admin.index');
     });
+    Route::resource('user', App\Http\Controllers\UsersController::class);
 });
 
 Route::get('/', [FrontController::class, 'index']);

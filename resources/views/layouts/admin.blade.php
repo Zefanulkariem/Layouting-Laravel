@@ -29,19 +29,27 @@
   <link href="{{asset('sass/bordered-theme.css')}}" rel="stylesheet">
   <link href="{{asset('sass/responsive.css')}}" rel="stylesheet">
 
+
+  @yield('styles')
+
+  
 </head>
 
 <body>
 
   <!--start header-->
-@include('layouts.admin.navbar')kjsbdfsjksehfbesbfvuisebvjicbesuivbfuijkdrvjkrdbvjkerbaui
+@include('layouts.admin.navbar')
   <!--end top header-->
 
 @include('layouts.admin.sidebar')
 
 
   <!--start main wrapper-->
-
+     <main class="main-wrapper">
+        <div class="main-content">
+          @yield('content')
+        </div>
+     </main>
   <!--end main wrapper-->
 
   <!--start overlay-->
@@ -266,6 +274,10 @@
   <script>
 	   new PerfectScrollbar(".user-list")
   </script>
+
+
+  @stack('scripts') 
+
 
 </body>
 
