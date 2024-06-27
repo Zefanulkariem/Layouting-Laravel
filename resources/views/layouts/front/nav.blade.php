@@ -63,7 +63,32 @@
                                  <i class="fal fa-shopping-cart"></i>
                                  <span class="tp-product-count">2</span>
                               </button>
-                              <a href="sign-in.html"><i class="fal fa-user"></i></a>
+                              @guest
+                                 <a href="sign-in.html"><i class="fal fa-user"></i></a>
+                              @else
+                              <div class="header-meta__lang">
+                                 <ul>
+                                    <li>
+                                       <a href="#">
+                                          {{Auth::user()->name}} {{--nama user--}}
+                                          <span><i class="fal fa-angle-down"></i></span>
+                                       </a>
+                                       <ul class="header-meta__lang-submenu">
+                                          <li>
+                                             <a href="#">Profil</a>
+                                          </li>
+                                          <li>
+                                             <a href="{{route('logout')}}"
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                             </form>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </div>
+                              @endguest
                               <a href="wishlist.html"><i class="fal fa-heart"></i></a>
                            </div>
                         </div>

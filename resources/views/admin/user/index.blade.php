@@ -14,21 +14,21 @@
     <div class="ps-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
-                <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                <li class="breadcrumb-item"><a href="javascript:;"><i class="person"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Data Table</li>
+                <li class="breadcrumb-item active" aria-current="page">User Management</li>
             </ol>
         </nav>
     </div>
     <div class="ms-auto">
         <div class="btn-group">
-            <button type="{{route('user.create')}}" class="btn btn-primary">Add Data</button>
+            <a href="{{route('user.create')}}" class="btn btn-primary">Tambahkan Data</a>
         </div>
     </div>
 </div>
 <!--end breadcrumb-->
 
-<h6 class="mb-0 text-uppercase">DataTable Example</h6>
+<h6 class="mb-0 text-uppercase">DataTable Role</h6>
 <hr>
 <div class="card">
     <div class="card-body">
@@ -36,18 +36,29 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
+                        <th>No</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Is Admin</th>
+                        <th>Action</th>
                         {{-- <th>Salary</th> --}}
                     </tr>
                 </thead>
                 <tbody>
                     @php $no = 1; @endphp
-                    @foreach ($users as $data)
-                    <tr>
+                    @foreach ($user as $data)
+                    @if($loop->first)
+                        <tr>
+                            <td>{{$no++}}</td>
+                            <td>{{$data->name}}</td>
+                            <td>{{$data->email}}</td>
+                            <td>{{$data->isAdmin == 1 ? 'Admin' : 'User'}}</td>
+                            <td>
+                                {{-- <button class="btn btn-danger" disabled>Tidak Bisa di hapus</button> --}}
+                            </td>
+                        </tr>
+                        @else
+                        <tr>
                             <td>{{$no++}}</td>
                             <td>{{$data->name}}</td>
                             <td>{{$data->email}}</td>
@@ -56,26 +67,29 @@
                                 <form action="{{route('user.destroy', $data->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{route('user.edit', $data->id)}}" class="btn btn-warning">
+                                    <a href="{{route('user.edit', $data->id)}}" class="btn btn-sm btn-warning">
                                         Edit
                                     </a>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <a href="{{route('user.destroy', $data->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">
+                                        Delete
+                                    </a>
                                 </form>
                             </td>
                         </tr>
+                        @endif
                         @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
-
-
-@endsection
-
-
-@push('scripts')
-<script src="{{asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
+    
+    
+    @endsection
+    
+    
+    @push('scripts')
+    <script src="{{asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
 <script>
     $(document).ready(function() {
